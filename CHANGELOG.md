@@ -9,4 +9,5 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Add sheets_sync: schema-driven one-way Google Sheets diff engine with formula-injection mitigation
 - Initial project structure from the factory utility template.

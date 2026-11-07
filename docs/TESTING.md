@@ -1,20 +1,14 @@
 # Testing
 
-## Running
+## Test Coverage
 
-```sh
-uv run pytest --cov=sheets_sync   # tests with coverage report
-uv run python scripts/check.py      # every gate, as CI and the factory run it
-```
+The project uses `pytest` and `pytest-cov` to ensure branch coverage of the `src/sheets_sync` package is maintained at or above 80%.
 
-## Policy
+## Existing Tests
 
-- Branch coverage of `src/sheets_sync` must stay at or above 80 %; the gate fails below it.
-- Tests exercise the public API (`import sheets_sync`) and assert every observable effect:
-  return values, raised exceptions and their messages.
-- Each bug fix starts with a failing test that reproduces it.
-- Tests are deterministic: no network, no wall clock, no dependence on test order.
-
-## Layout
-
-`tests/test_<module>.py` mirrors each public module. Shared fixtures go in `tests/conftest.py`.
+- **`tests/test_sheets_sync.py`**: Contains unit tests for the core logic:
+  - Validates `column_letter` bijective conversion logic (e.g., 1->A, 26->Z, 702->ZZ, 703->AAA, 18278->ZZZ).
+  - Exercises the `SheetSchema` validation, including duplicate key detection and column name checks.
+  - Verifies `plan_sync` logic for updates, appends, and `delete_missing` behavior.
+  - Tests `serialize` with all supported types and boundary conditions (huge strings).
+  - Uses `FakeSheets` (an in-memory `SheetsPort` implementation) to record calls and assert sync behavior without network access.
